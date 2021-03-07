@@ -1,5 +1,6 @@
-# ZCPP
-Advanced C++ classes project
+# Funcplus
+Advanced C++ classes project of an interpreter of a 
+simple functional programming language.
 
 
 ### Installing PEGTL

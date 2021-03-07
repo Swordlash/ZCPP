@@ -6,11 +6,14 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+enable_testing()
+
 set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets taocpp::pegtl)
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(test_grammar lang/analyze.cpp)
+add_executable(${PROJECT_NAME} main.cpp lang/grammar.hpp)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
@@ -19,4 +22,8 @@ endif ()
 
 find_package(pegtl)
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
+
 target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED})
+target_link_libraries(test_grammar taocpp::pegtl)
+
+add_test(test_grammar test_grammar "" test_grammar)
