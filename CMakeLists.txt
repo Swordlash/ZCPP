@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
 project(ZCPP)
 
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake ${CMAKE_MODULE_PATH})
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -10,10 +12,10 @@ enable_testing()
 
 set(QT_VERSION 5)
 set(REQUIRED_LIBS Core Gui Widgets)
-set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets taocpp::pegtl)
+set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets taocpp::pegtl GMP::gmp GMP::gmpxx)
 
 add_executable(test_grammar lang/analyze.cpp)
-add_executable(${PROJECT_NAME} main.cpp lang/grammar.hpp)
+add_executable(${PROJECT_NAME} main.cpp lang/grammar.hpp lang/expressions/expression.hpp lang/values/value.hpp lang/typecheck.hpp lang/interpreter.hpp lang/expressions/integer.hpp lang/expressions/expression.cpp lang/values/integer.hpp lang/values/integer.cpp lang/expressions/integer.cpp lang/utils/format.hpp lang/utils/format.cpp)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
@@ -22,6 +24,8 @@ endif ()
 
 find_package(pegtl)
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
+
+find_package (GMP REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED})
 target_link_libraries(test_grammar taocpp::pegtl)
