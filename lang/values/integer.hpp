@@ -17,7 +17,7 @@ namespace value
         mpz_class value;
 
     public:
-        explicit integer(std::string_view value_str) : value(value_str.data()) {}
+        explicit integer(std::string_view&& value_str) : value(value_str.data()) {}
 
         std::ostream& operator<<(std::ostream&) override;
     };

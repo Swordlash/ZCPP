@@ -18,7 +18,7 @@ namespace ast
 {
     class integer : public expression
     {
-        explicit integer(std::unique_ptr<pegtl::parse_tree::node>& node) : expression(node) {}
+        explicit integer(std::unique_ptr<pegtl::parse_tree::node>&& node) : expression(std::move(node)) {}
 
         virtual typecheck::type typecheck(typecheck::context&) override;
         virtual std::shared_ptr<value::value> interpret(interpreter::context&) override;

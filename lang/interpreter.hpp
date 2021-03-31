@@ -7,6 +7,7 @@
 
 #include <tao/pegtl/contrib/parse_tree.hpp>
 #include "utils/format.hpp"
+#include "exception.hpp"
 
 namespace pegtl = TAO_PEGTL_NAMESPACE;
 
@@ -14,19 +15,7 @@ namespace interpreter
 {
     class context {};
 
-    class interpreter_error : public std::exception
-    {
-    private:
-        std::string message;
-    public:
-
-        interpreter_error(const char* msg, std::unique_ptr<pegtl::parse_tree::node>& node)
-        : message (format("Error (in line %d, column %d): %s", node->begin().line, node->begin().column, msg)) {};
-
-        const char *what() const noexcept override {
-            return message.c_str();
-        }
-    };
+    class interpreter_error : public lang_exception {};
 }
 
 #endif //ZCPP_INTERPRETER_HPP

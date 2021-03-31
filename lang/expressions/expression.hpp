@@ -21,11 +21,11 @@ namespace ast
     private:
         std::unique_ptr<pegtl::parse_tree::node> node;
     public:
-        explicit expression(std::unique_ptr<pegtl::parse_tree::node>& node) : node(std::move(node)) {}
+        explicit expression(std::unique_ptr<pegtl::parse_tree::node>&& node) : node(std::move(node)) {}
 
         virtual std::shared_ptr<value::value> interpret(interpreter::context&) = 0;
         virtual typecheck::type typecheck(typecheck::context&) = 0;
-        virtual std::ostream& operator<<(std::ostream&) = 0;
+        virtual std::ostream& operator<<(std::ostream&);
 
         pegtl::parse_tree::node& parse_node();
     };
